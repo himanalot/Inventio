@@ -1,64 +1,73 @@
-# Inventio PDF Viewer
+# Inventio - Academic Research Platform
 
-A powerful web application for document management, advanced PDF viewing, and research assistance. Built with Next.js and using Anara Labs Lector's PDF rendering capabilities.
+A comprehensive platform for academic research, literature review, and scholarly collaboration with advanced document management capabilities. Built with Next.js and powered by cutting-edge document processing technology.
 
 ## What is Inventio?
 
-Inventio is a comprehensive document management and PDF viewing platform designed for researchers, students, and professionals who work extensively with PDF documents. It combines powerful search capabilities, annotation tools, and document organization features to enhance your research and learning experience.
+Inventio is an academic research platform designed for researchers, scholars, and students to transform how they discover, organize, and extract insights from academic literature. Moving beyond basic document viewing, Inventio enables structured research workflows, facilitates literature review, and enhances academic collaboration through intelligent document management and analysis tools.
 
 ## Key Features
 
-### Advanced PDF Viewing
-- **High-fidelity rendering** of complex PDF documents with support for scientific papers and technical documents
-- **Responsive layout** that works across different screen sizes
-- **Page thumbnails** for quick navigation through long documents
-- **Multiple viewing modes** including single page, continuous scroll, and thumbnail view
+### Research Workflow Optimization
+- **Literature organization** by research topic, theoretical framework, or methodology
+- **Citation management** to track and export references for academic papers
+- **Research notes** attached directly to source materials
+- **Progress tracking** across multiple research projects
 
-### Powerful Search Capabilities
-- **Full-text search** within documents with highlighted results
-- **Semantic search** that understands context and meaning, not just keywords
-- **Search across document library** to find content across all your uploaded documents
-- **Fuzzy matching** to find similar terms and handle typos
+### Academic Knowledge Discovery
+- **Semantic search across literature** to find related concepts, not just keywords
+- **Cross-reference identification** to discover connections between papers
+- **Concept mapping** to visualize relationships between research findings
+- **Gap analysis** to identify under-researched areas in your field
 
-### Document Annotations
-- **Highlighting tools** with multiple colors for different categorization needs
-- **Text selection** with precise rendering and annotation capabilities
-- **Persistent annotations** that are saved between sessions
-- **Annotation export** to share your research notes with colleagues
+### Collaborative Scholarship
+- **Shared collections** for research teams and lab groups
+- **Collaborative annotations** with comment threads
+- **Permission management** for different team member roles
+- **Version control** for evolving research documents
 
-### Document Management
-- **Secure document storage** with authentication
-- **Document organization** by categories, tags, or custom collections
-- **Document sharing** with controlled access
-- **Version tracking** for updated documents
+### Advanced Document Analysis
+- **Intelligent document summarization** of key findings and methodology
+- **Figure and table extraction** from research papers
+- **Citation network visualization** to understand influential works
+- **Statistical data extraction** from research findings
 
-### User Experience
-- **Secure authentication** via email/password or Google accounts
-- **Responsive interface** that works on desktop and tablet devices
-- **Keyboard shortcuts** for power users
-- **Dark mode support** for comfortable reading in low-light environments
+### Research Output Support
+- **Literature review assistance** with categorization tools
+- **Citation formatting** in multiple academic styles (APA, MLA, Chicago, etc.)
+- **Export functionality** for notes and annotations
+- **Integration with reference managers** like Zotero or Mendeley
 
-## Use Cases
+## Document Management Capabilities
+- **High-fidelity rendering** of complex academic papers with mathematical notation
+- **Full-text search** within documents with relevance ranking
+- **Multi-document comparison** for literature review
+- **Annotation and highlighting** with categorization by research themes
+- **Document organization** by research project, course, or topic
+- **Secure storage** with encryption for sensitive research data
+
+## Primary Use Cases
 
 ### Academic Research
-Perfect for researchers who need to review, annotate, and organize scientific papers. Search functionality helps discover connections between documents and build a comprehensive literature review.
+Perfect for researchers conducting literature reviews, analyzing scholarly papers, and managing research projects. Organize hundreds of papers into meaningful collections with searchable annotations and shared team access.
 
-### Student Learning
-Students can upload course materials, textbooks, and lecture notes, then use the annotation and search tools to prepare for exams and write papers.
+### Graduate Studies
+Graduate students can manage course readings, dissertation research, and teaching materials in one place. Track research progress and maintain comprehensive literature reviews throughout degree programs.
 
-### Professional Document Management
-Legal professionals, healthcare workers, and business analysts can manage, review, and extract information from contracts, medical literature, or business documents.
+### Scientific Collaboration
+Research teams can create shared document libraries with collaborative annotations, reducing duplication of effort and enhancing knowledge transfer between team members.
 
-### Digital Library
-Create your personal digital library with search capabilities that extend beyond what typical file systems offer.
+### Academic Writing
+Streamline the process of writing research papers, theses, and dissertations with organized literature, accessible annotations, and easy citation management.
 
 ## Technology Stack
 
 - **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **PDF Processing**: PDF.js via Anara Labs Lector library
+- **Document Processing**: PDF.js via Anara Labs Lector library
+- **Knowledge Management**: Custom semantic indexing
 - **Authentication**: Supabase Auth
 - **Storage**: Supabase Storage
-- **3D Visualization**: Three.js (for document exploration features)
+- **Data Visualization**: Three.js (for research network visualization)
 - **Deployment**: Railway
 
 ## Getting Started
