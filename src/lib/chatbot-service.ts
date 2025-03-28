@@ -336,7 +336,7 @@ async function getRelevantChunks(
   query: string,
   userId: string,
   documentPath: string,
-  limit: number = 5,
+  limit: number = 15,
   similarityThreshold: number = 0.2 // Lowered from 0.7 to be more lenient
 ): Promise<any[]> {
   try {
