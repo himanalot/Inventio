@@ -16,28 +16,29 @@ const logoUrl = '/inkrlogo.png'
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Inventio - Advanced PDF Viewer and Document Management',
-  description: 'A powerful PDF viewer with search, annotation, and document management capabilities. Perfect for researchers, students, and professionals.',
+  title: 'Inventio - Academic Research Platform',
+  description: 'A comprehensive platform for academic research, literature review, and scholarly collaboration that transforms how researchers discover, organize, and extract insights from academic literature.',
   keywords: [
-    'pdf viewer',
-    'document management',
-    'pdf search',
-    'pdf annotation',
-    'pdf highlights',
-    'document library',
-    'research tools',
-    'document viewer',
-    'academic research',
-    'professional documents',
-    'pdf navigation',
-    'pdf thumbnails',
-    'document storage',
-    'text search',
-    'pdf document viewer',
-    'document organization',
-    'study tools',
-    'research documents',
-    'pdf management'
+    'academic research platform',
+    'literature review',
+    'research workflow',
+    'scholarly collaboration',
+    'citation management',
+    'research notes',
+    'semantic search',
+    'cross-reference identification',
+    'concept mapping',
+    'collaborative annotations',
+    'document analysis',
+    'figure extraction',
+    'citation network',
+    'literature organization',
+    'research methodology',
+    'academic writing',
+    'dissertation research',
+    'scientific collaboration',
+    'knowledge management',
+    'research output'
   ].join(', '),
   icons: {
     icon: [
@@ -51,8 +52,8 @@ export const metadata = {
   },
   manifest: '/site.webmanifest',
   openGraph: {
-    title: 'Inventio - Advanced PDF Viewer and Document Management',
-    description: 'A powerful PDF viewer with search, annotation, and document management capabilities. Manage your documents with ease and precision.',
+    title: 'Inventio - Academic Research Platform',
+    description: 'Transform how you discover, organize, and extract insights from academic literature with intelligent document management and analysis tools for researchers and scholars.',
     url: siteUrl,
     siteName: 'Inventio',
     images: [
@@ -60,7 +61,7 @@ export const metadata = {
         url: logoUrl,
         width: 800,
         height: 800,
-        alt: 'Inventio - PDF Viewer and Document Management',
+        alt: 'Inventio - Academic Research Platform',
       }
     ],
     locale: 'en_US',
@@ -68,8 +69,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Advanced PDF Viewer and Document Management | Inventio',
-    description: 'Explore documents with our powerful PDF viewer featuring search, annotation, and document management capabilities.',
+    title: 'Academic Research Platform for Scholars | Inventio',
+    description: 'Streamline your research workflow with powerful literature organization, semantic search, and collaborative annotation tools designed for academic researchers.',
     images: [logoUrl],
   },
   alternates: {
@@ -110,7 +111,7 @@ export default function RootLayout({
               "url": siteUrl,
               "logo": logoUrl,
               "sameAs": [],
-              "description": "Advanced PDF viewer and document management system for researchers, students, and professionals.",
+              "description": "An academic research platform designed to transform how researchers discover, organize, and extract insights from scholarly literature through intelligent document management and analysis tools.",
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "US"
