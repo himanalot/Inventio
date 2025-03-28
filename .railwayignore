@@ -1,0 +1,9 @@
+.git
+node_modules
+.next
+search-server
+data
+2022-pi-email-report.xlsx
+README.md
+.DS_Store
+.env.local 
