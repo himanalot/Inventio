@@ -1,6 +1,90 @@
 # Inventio PDF Viewer
 
-A Next.js application with PDF viewing capabilities using the Anara Labs Lector library.
+A powerful web application for document management, advanced PDF viewing, and research assistance. Built with Next.js and using Anara Labs Lector's PDF rendering capabilities.
+
+## What is Inventio?
+
+Inventio is a comprehensive document management and PDF viewing platform designed for researchers, students, and professionals who work extensively with PDF documents. It combines powerful search capabilities, annotation tools, and document organization features to enhance your research and learning experience.
+
+## Key Features
+
+### Advanced PDF Viewing
+- **High-fidelity rendering** of complex PDF documents with support for scientific papers and technical documents
+- **Responsive layout** that works across different screen sizes
+- **Page thumbnails** for quick navigation through long documents
+- **Multiple viewing modes** including single page, continuous scroll, and thumbnail view
+
+### Powerful Search Capabilities
+- **Full-text search** within documents with highlighted results
+- **Semantic search** that understands context and meaning, not just keywords
+- **Search across document library** to find content across all your uploaded documents
+- **Fuzzy matching** to find similar terms and handle typos
+
+### Document Annotations
+- **Highlighting tools** with multiple colors for different categorization needs
+- **Text selection** with precise rendering and annotation capabilities
+- **Persistent annotations** that are saved between sessions
+- **Annotation export** to share your research notes with colleagues
+
+### Document Management
+- **Secure document storage** with authentication
+- **Document organization** by categories, tags, or custom collections
+- **Document sharing** with controlled access
+- **Version tracking** for updated documents
+
+### User Experience
+- **Secure authentication** via email/password or Google accounts
+- **Responsive interface** that works on desktop and tablet devices
+- **Keyboard shortcuts** for power users
+- **Dark mode support** for comfortable reading in low-light environments
+
+## Use Cases
+
+### Academic Research
+Perfect for researchers who need to review, annotate, and organize scientific papers. Search functionality helps discover connections between documents and build a comprehensive literature review.
+
+### Student Learning
+Students can upload course materials, textbooks, and lecture notes, then use the annotation and search tools to prepare for exams and write papers.
+
+### Professional Document Management
+Legal professionals, healthcare workers, and business analysts can manage, review, and extract information from contracts, medical literature, or business documents.
+
+### Digital Library
+Create your personal digital library with search capabilities that extend beyond what typical file systems offer.
+
+## Technology Stack
+
+- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
+- **PDF Processing**: PDF.js via Anara Labs Lector library
+- **Authentication**: Supabase Auth
+- **Storage**: Supabase Storage
+- **3D Visualization**: Three.js (for document exploration features)
+- **Deployment**: Railway
+
+## Getting Started
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+### Authentication Setup
+
+Inventio uses Supabase for authentication. You'll need to:
+1. Create a Supabase project
+2. Configure authentication providers (email/password, Google, etc.)
+3. Add your Supabase URL and anon key to the `.env.local` file
 
 ## Railway Deployment Instructions
 
@@ -25,74 +109,17 @@ A Next.js application with PDF viewing capabilities using the Anara Labs Lector 
    - Add the following environment variables in Railway project settings:
      - `NODE_ENV`: set to `production`
      - `NEXT_PUBLIC_SITE_URL`: set to your Railway deployment URL (once available)
+     - Add Supabase configuration variables
      - Add any other environment variables defined in your `.env` file
 
 4. **Customizations**
    - The application uses the `railway/railway.json` configuration
    - You can modify deployment settings in Railway's dashboard
 
-### Local Development
+## Contributing
 
-```bash
-# Install dependencies
-npm install
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-# Run development server
-npm run dev
+## License
 
-# Build for production
-npm run build
-
-# Start production server
-npm start
-```
-
-## Features
-- PDF viewing and navigation
-- Document search functionality
-- Thumbnail generation
-- PDF annotations and highlights
-
-## Tech Stack
-- Next.js
-- TypeScript
-- Tailwind CSS
-- Supabase (authentication)
-- PDF.js (via Anara Labs Lector)
-
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License - see the LICENSE file for details.
