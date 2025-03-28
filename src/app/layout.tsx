@@ -12,33 +12,32 @@ const inter = Inter({
 
 // Absolute URL for assets
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-const logoUrl = '/mentorilogo.png'
+const logoUrl = '/inkrlogo.png'
 
 export const metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Mentori - Connect with Peer Tutors & Find Learning Opportunities',
-  description: 'Find tutoring sessions and connect directly with peer tutors. Discover learning opportunities across subjects for all academic levels - from high school to graduate courses.',
+  title: 'Inventio - Advanced PDF Viewer and Document Management',
+  description: 'A powerful PDF viewer with search, annotation, and document management capabilities. Perfect for researchers, students, and professionals.',
   keywords: [
-    'peer tutoring',
-    'find tutors',
-    'student tutoring',
-    'high school tutoring',
-    'undergraduate tutoring',
-    'college tutoring',
-    'academic help',
-    'learning assistance',
-    'study sessions',
-    'subject help',
-    'math tutoring',
-    'science tutoring',
-    'humanities tutoring',
-    'peer learning',
-    'academic support',
-    'student mentoring',
-    'connect with tutors',
-    'educational assistance',
-    'study help',
-    'academic mentorship'
+    'pdf viewer',
+    'document management',
+    'pdf search',
+    'pdf annotation',
+    'pdf highlights',
+    'document library',
+    'research tools',
+    'document viewer',
+    'academic research',
+    'professional documents',
+    'pdf navigation',
+    'pdf thumbnails',
+    'document storage',
+    'text search',
+    'pdf document viewer',
+    'document organization',
+    'study tools',
+    'research documents',
+    'pdf management'
   ].join(', '),
   icons: {
     icon: [
@@ -52,16 +51,16 @@ export const metadata = {
   },
   manifest: '/site.webmanifest',
   openGraph: {
-    title: 'Mentori - Connect with Peer Tutors for Academic Success',
-    description: 'Find qualified peer tutors and connect directly with them. Search through available tutoring sessions and reach out to potential mentors across subjects.',
+    title: 'Inventio - Advanced PDF Viewer and Document Management',
+    description: 'A powerful PDF viewer with search, annotation, and document management capabilities. Manage your documents with ease and precision.',
     url: siteUrl,
-    siteName: 'Mentori',
+    siteName: 'Inventio',
     images: [
       {
         url: logoUrl,
         width: 800,
         height: 800,
-        alt: 'Mentori - Peer Tutoring Platform',
+        alt: 'Inventio - PDF Viewer and Document Management',
       }
     ],
     locale: 'en_US',
@@ -69,8 +68,8 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Connect with Peer Tutors & Find Academic Support | Mentori',
-    description: 'Search available tutoring sessions and connect with qualified peer tutors. Find support that matches your academic needs across subjects.',
+    title: 'Advanced PDF Viewer and Document Management | Inventio',
+    description: 'Explore documents with our powerful PDF viewer featuring search, annotation, and document management capabilities.',
     images: [logoUrl],
   },
   alternates: {
@@ -107,11 +106,11 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Mentori",
+              "name": "Inventio",
               "url": siteUrl,
               "logo": logoUrl,
               "sameAs": [],
-              "description": "Connect with peer tutors and find academic learning opportunities across subjects.",
+              "description": "Advanced PDF viewer and document management system for researchers, students, and professionals.",
               "address": {
                 "@type": "PostalAddress",
                 "addressCountry": "US"
