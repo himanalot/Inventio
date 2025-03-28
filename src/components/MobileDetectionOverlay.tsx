@@ -8,7 +8,7 @@ interface MobileDetectionOverlayProps {
 }
 
 export default function MobileDetectionOverlay({ 
-  message = "Inventio is designed for larger screens to provide an optimal research experience. Please visit us on a desktop or laptop computer."
+  message = "Inventio is designed for larger screens to provide an optimal research experience. Please visit us on a desktop or laptop computer. If you are on a computer, please expand the window to full screen."
 }: MobileDetectionOverlayProps) {
   return (
     <div className="lg:hidden fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center p-6 text-center">
