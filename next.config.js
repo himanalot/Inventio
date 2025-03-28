@@ -1,10 +1,26 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
-  // Ensure static assets are copied to the standalone output
+  // Make sure we copy all static assets
+  distDir: '.next',
+  // Handle CSS properly
+  optimizeCss: true,
+  // Output configuration for standalone
+  output: {
+    standalone: true,
+    // Copy all static files
+    export: {
+      trailingSlash: true
+    }
+  },
+  // Add more tracing to ensure all files are included
   experimental: {
     outputFileTracingRoot: process.cwd(),
+    outputFileTracingIncludes: {
+      '/**': ['./public/**/*']
+    },
+    // Enable verbose tracing to debug static file inclusion
+    outputFileTracingVerbose: true
   },
   // Ensure static assets like CSS and images are properly served
   staticPageGenerationTimeout: 120,
