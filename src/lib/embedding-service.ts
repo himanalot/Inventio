@@ -150,7 +150,7 @@ export async function searchRelevantChunks(
   queryEmbedding: number[],
   userId: string,
   documentPath?: string,
-  limit: number = 5,
+  limit: number = 15,
   similarityThreshold: number = 0.2 // Lowered from 0.7 for more lenient matching
 ): Promise<any[]> {
   try {

@@ -292,52 +292,68 @@ export default function ChatPanel({ conversation, onClose, onCitationClick }: Ch
         
         {/* Chat Messages */}
         {messages.map((message, index) => (
-          <div 
-            key={message.id} 
-            className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div 
-              className={`max-w-[85%] rounded-lg px-4 py-2 ${
-                message.role === 'user' 
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-muted'
-              }`}
-            >
-              {message.content === '...' ? (
-                <div className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+          <div key={message.id} className="mb-4">
+            {message.role === 'assistant' && (
+              <div className={`flex justify-start`}>
+                <div className={`ml-10 text-gray-500 text-[10px] font-medium mb-1 text-left`}>
+                  Inventio
                 </div>
-              ) : message.role === 'assistant' ? (
-                <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:mb-2 prose-headings:mt-1 prose-p:mb-1 prose-p:mt-1">
-                  <ReactMarkdown>
-                    {message.content}
-                  </ReactMarkdown>
-                </div>
-              ) : (
-                <div className="prose prose-sm max-w-none dark:prose-invert">
-                  {message.content.split('\n').map((line: string, i: number) => (
-                    <React.Fragment key={i}>
-                      {line}
-                      {i < message.content.split('\n').length - 1 && <br />}
-                    </React.Fragment>
-                  ))}
+              </div>
+            )}
+            <div className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {message.role === 'assistant' && (
+                <div className="flex items-start mr-2">
+                  <div className="w-8 h-8 rounded-full bg-black"></div>
                 </div>
               )}
-              {/* We would handle citation clicks here if the message contains them */}
-              {message.citations && message.citations.length > 0 && onCitationClick && (
-                <div className="mt-2 text-xs">
-                  <button 
-                    className="text-blue-500 hover:text-blue-700 underline"
-                    onClick={() => {
-                      if (message.citations && message.citations.length > 0 && onCitationClick) {
-                        onCitationClick(message.citations[0].position);
-                      }
-                    }}
-                  >
-                    View citation
-                  </button>
+              <div 
+                className={`max-w-[85%] rounded-lg px-5 py-3 ${
+                  message.role === 'user' 
+                    ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground rounded-tr-none'
+                    : 'bg-white dark:bg-gray-800 rounded-tl-none border border-border/40 dark:border-gray-700'
+                }`}
+              >
+                {message.content === '...' ? (
+                  <div className="flex items-center space-x-1 px-2 py-1">
+                    <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 bg-current rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
+                ) : message.role === 'assistant' ? (
+                  <div className="prose prose-sm max-w-none dark:prose-invert prose-headings:mb-2 prose-headings:mt-1 prose-p:mb-1 prose-p:mt-1">
+                    <ReactMarkdown>
+                      {message.content}
+                    </ReactMarkdown>
+                  </div>
+                ) : (
+                  <div className="prose prose-sm max-w-none dark:prose-invert">
+                    {message.content.split('\n').map((line: string, i: number) => (
+                      <React.Fragment key={i}>
+                        {line}
+                        {i < message.content.split('\n').length - 1 && <br />}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                )}
+                {/* We would handle citation clicks here if the message contains them */}
+                {message.citations && message.citations.length > 0 && onCitationClick && (
+                  <div className="mt-2 text-xs">
+                    <button 
+                      className="text-blue-500 hover:text-blue-700 underline"
+                      onClick={() => {
+                        if (message.citations && message.citations.length > 0 && onCitationClick) {
+                          onCitationClick(message.citations[0].position);
+                        }
+                      }}
+                    >
+                      View citation
+                    </button>
+                  </div>
+                )}
+              </div>
+              {message.role === 'user' && (
+                <div className="flex items-start ml-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 via-pink-400 to-white"></div>
                 </div>
               )}
             </div>
