@@ -73,22 +73,13 @@ export async function processDocumentQuery(
     }
     
     console.log('\n[Approach Selection]');
-    // Decide whether to use embedding-based RAG or full document approach
-    if (hasRelevantChunks) {
-      console.log('Using RAG approach with retrieved chunks');
-      // Use RAG approach with retrieved chunks
-      const response = await generateResponseWithRAG(userQuery, relevantPassages, messageHistory, relevantChunks);
-      console.log('\n[RAG Response Generated]');
-      console.log('Response length:', response.text.length);
-      return response;
-    } else {
-      console.log('Falling back to full document approach - no relevant chunks found');
-      // Fall back to full document approach if no chunks are available or query is complex
-      const response = await generateResponseWithFullDocument(documentPath, userQuery, messageHistory);
-      console.log('\n[Full Document Response Generated]');
-      console.log('Response length:', response.length);
-      return { text: response };
-    }
+    console.log('Using combined approach with both RAG and full document');
+    
+    // Use the combined approach that leverages both RAG and full document
+    const response = await generateCombinedResponse(documentPath, userQuery, messageHistory, relevantChunks);
+    console.log('\n[Combined Response Generated]');
+    console.log('Response length:', response.text.length);
+    return response;
   } catch (error) {
     console.error('\n[RAG Process Error]:', error);
     return {
@@ -444,4 +435,143 @@ function arrayBufferToBase64(buffer: ArrayBuffer | Uint8Array): string {
   }
   
   return btoa(binary);
+}
+
+/**
+ * Generate a response using both RAG and full document approaches combined
+ * @param documentPath The path of the document in storage
+ * @param userQuery The user's question
+ * @param messageHistory Previous conversation messages formatted as a string
+ * @param relevantChunks Array of relevant chunks from vector search
+ * @returns Promise with the generated response
+ */
+async function generateCombinedResponse(
+  documentPath: string,
+  userQuery: string,
+  messageHistory: string,
+  relevantChunks: any[] = []
+): Promise<{text: string; citations?: {text: string; position: any}[]}> {
+  try {
+    console.log('\n[Combined Approach Started] ----------------');
+    
+    // Get the document URL
+    const documentUrl = await getFileDownloadUrl(documentPath);
+    
+    // Fetch the document as an ArrayBuffer
+    const response = await fetch(documentUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch document: ${response.status}`);
+    }
+    
+    const documentArrayBuffer = await response.arrayBuffer();
+    const documentBytes = new Uint8Array(documentArrayBuffer);
+    
+    // Convert to base64
+    const base64Document = arrayBufferToBase64(documentBytes);
+    
+    // Format relevant chunks for the prompt
+    let relevantPassages = '';
+    if (relevantChunks && relevantChunks.length > 0) {
+      relevantPassages = 'Here are relevant passages from the document that may help answer the query:\n\n';
+      
+      relevantChunks.forEach((chunk, index) => {
+        relevantPassages += `PASSAGE ${index + 1} [Page ${chunk.page_number}]:\n${chunk.text}\n\n`;
+      });
+    }
+    
+    // Construct system prompt that combines both approaches
+    const systemPrompt = `
+You are an AI research assistant analyzing academic documents. Answer the user's question based on the provided PDF document, relevant passages, and previous conversation history. The amount of relevant passages will vary based on the query.
+
+${messageHistory ? 'CONVERSATION HISTORY:\n' + messageHistory + '\n\n' : ''}
+
+${relevantPassages ? 'RELEVANT DOCUMENT PASSAGES:\n' + relevantPassages + '\n\n' : ''}
+
+USER QUERY: "${userQuery}"
+
+RESPONSE GUIDELINES:
+1. Base your response ONLY on the PDF document, relevant passages, and conversation history. Do not include external knowledge.
+2. Maintain a scholarly tone suitable for academic research assistance.
+3. When citing information, use a simple page number in parentheses, like this: (page 3).
+4. Provide page numbers for all factual claims directly from the document.
+5. Place citations at the end of sentences before the period (page 5).
+6. You can reference multiple pages in one citation if needed (pages 3-4).
+7. Double check all citations, even ones from the relevant passages, with the pdf document to verify their accuracy.
+8. Be precise and thorough in your analysis.
+9. If you're unsure or cannot find information in the document, acknowledge this limitation.
+10. Always maintain context from the conversation history when responding.
+11. Pay special attention to the relevant passages provided, as they are likely to contain information directly related to the query.
+
+RESPONSE STRUCTURE:
+- Begin with a direct answer to the user's question
+- Support claims with evidence from the document, with appropriate page citations
+- Organize information logically and clearly
+- End with a summary or conclusion
+
+Write a comprehensive, accurate response that addresses the user's query.
+    `;
+    
+    // Make the API request
+    const apiResponse = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { text: systemPrompt },
+              {
+                inline_data: {
+                  mime_type: 'application/pdf',
+                  data: base64Document
+                }
+              }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.2,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 4096,
+        }
+      })
+    });
+    
+    if (!apiResponse.ok) {
+      const errorText = await apiResponse.text();
+      throw new Error(`Gemini API error (${apiResponse.status}): ${errorText}`);
+    }
+    
+    const data = await apiResponse.json();
+    
+    if (data.candidates && data.candidates.length > 0 && 
+        data.candidates[0].content && 
+        data.candidates[0].content.parts && 
+        data.candidates[0].content.parts.length > 0) {
+      // Get the response text and clean up any references section
+      let responseText = data.candidates[0].content.parts[0].text;
+      const referencesPattern = /\n\n(References|Sources|Citations|Bibliography)[\s\S]*$/i;
+      responseText = responseText.replace(referencesPattern, '');
+      
+      console.log('\n[Combined Response Generated]');
+      console.log('Response length:', responseText.length);
+      
+      return { text: responseText };
+    } else {
+      console.error('Unexpected Gemini API response format:', JSON.stringify(data));
+      return { 
+        text: "I'm sorry, but I encountered an issue processing your question. Please try again."
+      };
+    }
+  } catch (error) {
+    console.error('\n[Combined Approach Error]:', error);
+    return {
+      text: `I'm sorry, but I encountered an error while trying to answer your question: ${error instanceof Error ? error.message : 'Unknown error'}`
+    };
+  } finally {
+    console.log('[Combined Approach Completed] ----------------\n');
+  }
 }
