@@ -2,6 +2,12 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
+  // Ensure static assets are copied to the standalone output
+  experimental: {
+    outputFileTracingRoot: process.cwd(),
+  },
+  // Ensure static assets like CSS and images are properly served
+  staticPageGenerationTimeout: 120,
   // Commenting out rewrites as we now want to use these pages with authentication
   // async rewrites() {
   //   return [
