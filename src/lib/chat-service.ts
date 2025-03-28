@@ -186,8 +186,7 @@ export async function saveChatMessage(
       .from('chat_messages')
       .select('*')
       .eq('conversation_id', conversationId)
-      .order('created_at', { ascending: true }) // Get messages in chronological order
-      .limit(10); // Get last 10 messages for context
+      .order('created_at', { ascending: true }) // Get all messages for context
     
     if (msgError) {
       console.error('Error fetching recent messages:', msgError);

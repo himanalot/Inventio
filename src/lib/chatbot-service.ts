@@ -59,7 +59,6 @@ export async function processDocumentQuery(
     
     // Format previous messages for context
     const messageHistory = previousMessages
-      .slice(-5)
       .map(msg => `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}`)
       .join('\n\n');
     
