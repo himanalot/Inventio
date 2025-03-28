@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+Allow: /funding
+Allow: /privacy
+Allow: /terms
+Allow: /cookies
+
+# Disallow auth and dynamic routes
+Disallow: /signin
+Disallow: /signup
+Disallow: /auth/*
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /saved
+Disallow: /admin/*
+Disallow: /api/*
+
+Sitemap: https://inkr.pro/sitemap.xml 
