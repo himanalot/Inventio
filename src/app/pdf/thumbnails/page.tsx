@@ -1823,25 +1823,11 @@ function AnaraViewerContent() {
                   </div>
                 </div>
 
-                <div className={cn(
-                  "border-t mt-4 p-4 shrink-0 text-center",
-                  showMainSidebar ? "block" : "hidden"
-                )}>
+                <div className="border-t mt-4 p-4 shrink-0 text-center">
                   <div className="text-xs text-gray-500 space-y-1">
                     <p className="font-medium text-gray-700">Made by Ishan Ramrakhiani</p>
                     <p>Inspired by Anara (Formerly Unriddle)</p>
                   </div>
-                  
-                  {/* Add sign out button */}
-                  <button
-                    onClick={async () => {
-                      await supabase.auth.signOut();
-                      window.location.reload();
-                    }}
-                    className="mt-3 w-full text-xs text-red-600 hover:text-red-800 font-medium py-1.5 px-2 rounded-md hover:bg-red-50 transition-colors"
-                  >
-                    Sign Out
-                  </button>
                 </div>
               </>
             )}
