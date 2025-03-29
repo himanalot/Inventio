@@ -26,6 +26,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import DocumentInfoSidebar from "@/components/DocumentInfoSidebar";
 import MobileDetectionOverlay from "@/components/MobileDetectionOverlay";
 import LoginDialog from "@/components/auth/LoginDialog";
+import { supabase } from '@/lib/supabase';
 
 // Define constants and types needed for PDF viewing
 const GEMINI_PROMPTS = {
@@ -1561,6 +1562,22 @@ function AnaraViewerContent() {
       setSearchDocumentQuery('');
     }
   }, [showDocumentSearch]);
+
+  useEffect(() => {
+    // Set up auth state change listener
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      // When a user signs up, reload the page
+      if (event === 'SIGNED_IN' || event === 'SIGNED_UP') {
+        // Use window.location.reload() for a full page refresh
+        window.location.reload();
+      }
+    });
+    
+    // Clean up listener on component unmount
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="h-screen w-full overflow-hidden relative flex flex-col">
