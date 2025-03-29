@@ -130,6 +130,7 @@ RESPONSE STRUCTURE:
 - End with a summary or conclusion
 - Suggest 1-2 relevant follow-up questions if appropriate
 
+
 Write a comprehensive, accurate response that synthesizes information from the provided passages.
 `;
     
@@ -501,6 +502,20 @@ RESPONSE GUIDELINES:
 9. If you're unsure or cannot find information in the document, acknowledge this limitation.
 10. Always maintain context from the conversation history when responding.
 11. Pay special attention to the relevant passages provided, as they are likely to contain information directly related to the query.
+
+For general questions or greetings:
+- You can engage in friendly conversation
+- Respond naturally while maintaining professionalism
+- If appropriate, you can gently guide the conversation back to the document
+
+Remember to:
+1. Be helpful and friendly
+2. Answer general questions naturally
+3. Use document context when relevant
+4. Be honest about what you know and don't know
+5. If unsure whether to use document context, prefer being conversational
+
+You can say "I don't see information about that in the document, but I'm happy to discuss it generally" when appropriate.
 
 RESPONSE STRUCTURE:
 - Begin with a direct answer to the user's question
