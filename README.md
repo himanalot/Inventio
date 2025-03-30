@@ -67,7 +67,6 @@ Streamline the process of writing research papers, theses, and dissertations wit
 - **Knowledge Management**: Custom semantic indexing
 - **Authentication**: Supabase Auth
 - **Storage**: Supabase Storage
-- **Data Visualization**: Three.js (for research network visualization)
 - **Deployment**: Railway
 
 ## Getting Started
