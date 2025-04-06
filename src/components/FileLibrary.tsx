@@ -212,7 +212,7 @@ export default function FileLibrary({ onFileSelect }: FileLibraryProps) {
     return (
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="loader-gray"></span>
-        <p className="mt-3 text-sm text-gray-600">Loading your documents...</p>
+        <p className="mt-3 text-sm text-gray-600">Loading your documents... (if page is continuously loading, please use Safari.)</p>
       </div>
     );
   }
