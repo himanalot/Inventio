@@ -69,17 +69,23 @@ export default function LoginDialog({
       }
       
       if (data.session) {
-        // Update auth state first
         await refreshAuth();
+        
+        // Dispatch custom event to notify other components about auth state change
+        window.dispatchEvent(new Event('auth-state-changed'));
         
         // Clear form fields
         setEmail("");
         setPassword("");
         
-        // Let the useEffect handle redirect after auth state updates
-        if (redirectPath) {
-          router.push(redirectPath);
+        // If there's no redirectPath, reload the page to refresh all components
+        if (!redirectPath) {
+          // Wait a moment for the auth state to propagate
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
+        // Dialog will be closed by the useEffect above when user state updates
       } else {
         throw new Error("Sign in failed - no session returned");
       }
@@ -133,22 +139,26 @@ export default function LoginDialog({
 
       // Handle signup result - with or without immediate session
       if (!data.session) {
-        setSuccessMessage("Account created successfully! Please check your email to verify your account.");
+        setSuccessMessage("Account created successfully! The page will refresh in a moment...");
         // Clear form fields
         setEmail("");
         setPassword("");
-        // Switch to sign in mode after successful signup
-        setAuthMode("signin");
+        // Add page reload after brief delay to refresh the UI state
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         // Clear form fields
         setEmail("");
         setPassword("");
-        // Update auth state
+        // If we have a session, user is logged in already
         await refreshAuth();
+        window.dispatchEvent(new Event('auth-state-changed'));
         
-        // Let the useEffect handle redirect after auth state updates
-        if (redirectPath) {
-          router.push(redirectPath);
+        if (!redirectPath) {
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
       }
     } catch (err: any) {
