@@ -78,14 +78,7 @@ export default function LoginDialog({
         setEmail("");
         setPassword("");
         
-        // If there's no redirectPath, reload the page to refresh all components
-        if (!redirectPath) {
-          // Wait a moment for the auth state to propagate
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        }
-        // Dialog will be closed by the useEffect above when user state updates
+        // The useEffect hook will handle closing dialog and redirect
       } else {
         throw new Error("Sign in failed - no session returned");
       }
@@ -139,14 +132,12 @@ export default function LoginDialog({
 
       // Handle signup result - with or without immediate session
       if (!data.session) {
-        setSuccessMessage("Account created successfully! The page will refresh in a moment...");
+        setSuccessMessage("Account created successfully! Please check your email to verify your account.");
         // Clear form fields
         setEmail("");
         setPassword("");
-        // Add page reload after brief delay to refresh the UI state
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // Switch to sign in mode after successful signup
+        setAuthMode("signin");
       } else {
         // Clear form fields
         setEmail("");
@@ -154,12 +145,7 @@ export default function LoginDialog({
         // If we have a session, user is logged in already
         await refreshAuth();
         window.dispatchEvent(new Event('auth-state-changed'));
-        
-        if (!redirectPath) {
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
-        }
+        // The useEffect hook will handle closing dialog and redirect
       }
     } catch (err: any) {
       setError(err.message || "An error occurred during sign up");
