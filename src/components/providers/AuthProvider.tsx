@@ -31,17 +31,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const isInitialized = useRef(false);
-  const authTimeout = useRef<NodeJS.Timeout>();
+  const lastEvent = useRef<string | null>(null);
+  const lastUserId = useRef<string | null>(null);
 
   // Function to refresh authentication state
   const refreshAuth = async () => {
     try {
       const currentUser = await getCurrentUser();
       setUser(currentUser || null);
+      lastUserId.current = currentUser?.id || null;
       setIsLoading(false);
     } catch (error) {
       console.error('Error refreshing auth state:', error);
       setUser(null);
+      lastUserId.current = null;
       setIsLoading(false);
     }
   };
@@ -51,6 +54,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await supabase.auth.signOut();
       setUser(null);
+      lastUserId.current = null;
       router.push('/signin');
     } catch (error) {
       console.error('Error signing out:', error);
@@ -71,30 +75,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Set up auth state change listener
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        // Clear any pending auth updates
-        if (authTimeout.current) {
-          clearTimeout(authTimeout.current);
+        // Skip INITIAL_SESSION events as they can cause duplicate updates in Chrome
+        if (event === 'INITIAL_SESSION') {
+          return;
         }
 
-        // Debounce auth state updates
-        authTimeout.current = setTimeout(async () => {
-          console.log(`Auth state changed: ${event}`, session?.user?.id || 'No user');
-          
-          if (session?.user) {
-            setUser(session.user);
-          } else {
-            setUser(null);
-          }
-          
-          setIsLoading(false);
-        }, 100);
+        // Prevent duplicate SIGNED_IN events for the same user
+        if (event === 'SIGNED_IN' && session?.user?.id === lastUserId.current) {
+          return;
+        }
+
+        console.log(`Auth state changed: ${event}`, session?.user?.id || 'No user');
+        lastEvent.current = event;
+        
+        if (session?.user) {
+          setUser(session.user);
+          lastUserId.current = session.user.id;
+        } else {
+          setUser(null);
+          lastUserId.current = null;
+        }
+        
+        setIsLoading(false);
       }
     );
 
     return () => {
-      if (authTimeout.current) {
-        clearTimeout(authTimeout.current);
-      }
       authListener.subscription.unsubscribe();
     };
   }, []);
