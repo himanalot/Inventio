@@ -69,16 +69,17 @@ export default function LoginDialog({
       }
       
       if (data.session) {
+        // Update auth state first
         await refreshAuth();
-        
-        // Dispatch custom event to notify other components about auth state change
-        window.dispatchEvent(new Event('auth-state-changed'));
         
         // Clear form fields
         setEmail("");
         setPassword("");
         
-        // The useEffect hook will handle closing dialog and redirect
+        // Let the useEffect handle redirect after auth state updates
+        if (redirectPath) {
+          router.push(redirectPath);
+        }
       } else {
         throw new Error("Sign in failed - no session returned");
       }
@@ -142,10 +143,13 @@ export default function LoginDialog({
         // Clear form fields
         setEmail("");
         setPassword("");
-        // If we have a session, user is logged in already
+        // Update auth state
         await refreshAuth();
-        window.dispatchEvent(new Event('auth-state-changed'));
-        // The useEffect hook will handle closing dialog and redirect
+        
+        // Let the useEffect handle redirect after auth state updates
+        if (redirectPath) {
+          router.push(redirectPath);
+        }
       }
     } catch (err: any) {
       setError(err.message || "An error occurred during sign up");
