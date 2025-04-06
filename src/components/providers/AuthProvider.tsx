@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase, getCurrentUser } from '@/lib/supabase';
 import { User } from '@supabase/supabase-js';
@@ -30,6 +30,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const isInitialized = useRef(false);
+  const authTimeout = useRef<NodeJS.Timeout>();
 
   // Function to refresh authentication state
   const refreshAuth = async () => {
@@ -57,24 +59,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // Initialize authentication state
   useEffect(() => {
-    refreshAuth();
+    if (isInitialized.current) return;
+    isInitialized.current = true;
+
+    const initAuth = async () => {
+      await refreshAuth();
+    };
+
+    initAuth();
 
     // Set up auth state change listener
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        console.log(`Auth state changed: ${event}`, session?.user?.id || 'No user');
-        
-        if (session?.user) {
-          setUser(session.user);
-        } else {
-          setUser(null);
+        // Clear any pending auth updates
+        if (authTimeout.current) {
+          clearTimeout(authTimeout.current);
         }
-        
-        setIsLoading(false);
+
+        // Debounce auth state updates
+        authTimeout.current = setTimeout(async () => {
+          console.log(`Auth state changed: ${event}`, session?.user?.id || 'No user');
+          
+          if (session?.user) {
+            setUser(session.user);
+          } else {
+            setUser(null);
+          }
+          
+          setIsLoading(false);
+        }, 100);
       }
     );
 
     return () => {
+      if (authTimeout.current) {
+        clearTimeout(authTimeout.current);
+      }
       authListener.subscription.unsubscribe();
     };
   }, []);
